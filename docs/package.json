@@ -1,14 +1,17 @@
 {
-  "name": "opencode-cloud-docs",
-  "version": "1.0.0",
+  "name": "docs",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.20.0",
-    "astro": "^4.5.0"
+    "@astrojs/starlight": "^0.38.3",
+    "astro": "^6.0.1",
+    "sharp": "^0.34.2"
   }
 }

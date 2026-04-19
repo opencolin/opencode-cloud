@@ -1,86 +1,47 @@
 ---
 title: Authentication
-description: Authenticate API requests with JWT or API keys
+description: Authenticate API requests
 ---
 
 # Authentication
 
-All API requests require authentication via either JWT tokens or API keys.
+All API requests require authentication via JWT tokens or API keys.
 
-## Authentication Methods
-
-### JWT Token
-
-Use a JSON Web Token:
+## JWT Token
 
 ```bash
 curl https://api.opencode.cloud/api/sessions \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+  -H 'Authorization: Bearer eyJhbGc...'
 ```
 
-**Token Lifetime:** 24 hours
+**Lifetime:** 24 hours
 
-### API Key
-
-Use an API key for server-to-server authentication:
+## API Key
 
 ```bash
 curl https://api.opencode.cloud/api/sessions \
-  -H 'Authorization: Bearer oc_live_abc123xyz789...'
+  -H 'Authorization: Bearer oc_live_abc123...'
 ```
 
-**Key Format:** 
-- Prefix: `oc_live_` (production) or `oc_test_` (testing)
-- Length: 32 random characters
+**Format:** `oc_live_...` (production) or `oc_test_...` (testing)
 
 ## Rate Limiting
 
-All authenticated requests are rate-limited:
-
-| Plan | Requests/minute | Concurrent Sessions |
-|------|-----------------|-------------------|
+| Plan | Requests/min | Concurrent |
+|------|-------------|-----------|
 | Free | 60 | 5 |
 | Pro | 600 | 50 |
 | Enterprise | Unlimited | 500+ |
 
 ## Best Practices
 
-1. **Never commit API keys to version control**
-   ```bash
-   echo ".env" >> .gitignore
-   ```
+1. Never commit API keys to version control
+2. Rotate keys regularly
+3. Use environment-specific keys
+4. Monitor key usage
 
-2. **Rotate keys regularly**
-   - Create new key
-   - Update applications
-   - Delete old key
+## Errors
 
-3. **Use environment-specific keys**
-   - `oc_test_` for development
-   - `oc_live_` for production
+**401 Unauthorized** — Invalid or missing token
 
-4. **Monitor key usage**
-   - Check activity logs
-   - Set up alerts for unusual patterns
-
-## Error Responses
-
-### 401 Unauthorized
-
-```json
-{
-  "ok": false,
-  "error": "invalid_token",
-  "message": "Token signature is invalid or expired"
-}
-```
-
-### 403 Forbidden
-
-```json
-{
-  "ok": false,
-  "error": "insufficient_permissions",
-  "message": "Your API key does not have permission for this action"
-}
-```
+**403 Forbidden** — Insufficient permissions

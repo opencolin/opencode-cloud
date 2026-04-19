@@ -14,7 +14,7 @@ Deploy opencode.cloud to Cloudflare Workers and production Contree.
 - Contree API key
 - KV and D1 namespaces configured
 
-## 1. Configure Wrangler
+## 1. Login to Cloudflare
 
 ```bash
 wrangler login
@@ -23,8 +23,8 @@ wrangler login
 ## 2. Create KV Namespaces
 
 ```bash
-wrangler kv:namespace create "dockingstation-cloud-kv"
-wrangler kv:namespace create "dockingstation-cloud-kv" --preview
+wrangler kv:namespace create "opencode-cloud-kv"
+wrangler kv:namespace create "opencode-cloud-kv" --preview
 ```
 
 ## 3. Set Secrets
@@ -41,16 +41,12 @@ cd apps/worker
 wrangler deploy
 ```
 
-You should see:
+You should see: `Uploaded opencode-cloud-worker`
 
-```
-Uploaded dockingstation-cloud-worker
-```
-
-## 5. Verify Deployment
+## 5. Verify
 
 ```bash
-curl https://dockingstation-cloud-worker.workers.dev/api/health
+curl https://opencode-cloud-worker.workers.dev/api/health
 ```
 
 Response:
@@ -67,51 +63,12 @@ Response:
 
 ## 6. Custom Domain
 
-```bash
-wrangler publish --compatibility-date 2024-04-12
-```
-
-Then configure your domain in Cloudflare dashboard.
-
-## Environment Variables
-
-Configure per environment in `wrangler.toml`:
-
-```toml
-[env.production]
-vars = { ENVIRONMENT = "production" }
-```
-
-## Monitoring
-
-### Check Logs
-
-```bash
-wrangler tail
-```
-
-### Monitor Usage
-
-Check Cloudflare Workers Analytics in dashboard.
-
-## Rollback
-
-If deployment fails:
-
-```bash
-wrangler rollback
-```
+Configure in Cloudflare dashboard.
 
 ## Troubleshooting
 
-### "KV namespace not found"
+**KV namespace not found** — Update `wrangler.toml` with correct IDs
 
-Update `wrangler.toml` with correct namespace IDs.
+**Secret not set** — Re-run `wrangler secret put CONTREE_API_KEY`
 
-### "Secret not set"
-
-Re-run: `wrangler secret put CONTREE_API_KEY`
-
-### "Deploy timeout"
-
-Check internet connection and try again.
+**Deploy timeout** — Check internet and retry
