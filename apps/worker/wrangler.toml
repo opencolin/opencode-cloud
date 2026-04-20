@@ -6,10 +6,10 @@ compatibility_date = "2025-04-01"
 ENVIRONMENT = "development"
 
 [[kv_namespaces]]
-binding = "SESSIONS_KV"
-id = "placeholder-sessions-kv-id"
+binding = "KV"
+id = "1fdaa96b724b4ac5b09edb67d997b901"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "opencode-cloud"
-database_id = "placeholder-d1-id"
+database_id = "1ec0ccdf-18f1-4f4d-a47c-dd4f306fc347"
